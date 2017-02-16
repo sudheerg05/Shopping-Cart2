@@ -1,0 +1,121 @@
+﻿<html>
+<head>
+    <title>Flipkart</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="Images/new_logo.png" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/script.js"></script>
+</head>
+<body ng-app="myModule" style="background-color:lightyellow">
+    <div ng-controller="myController">
+
+        <!-- Start of Navbar -->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a><img src="/Images/logo.png" alt="Flipkart" style="width:120px; height:40px; border-radius:10px; vertical-align:middle; margin-top:2px;"></img></a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li ng-click="showShop(); showGender(); shop=true"><a href="#">Home</a></li>
+                        <li ng-click="showGender('Male')"><a href="#">Men</a></li>
+                        <li ng-click="showGender('Female')"><a href="#">Women</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ng-click="showCart(); shop=false">
+                            <a href="#">
+                                <img src="/Images/cart3.png" alt="Cart" style="width:25px; height:25px; margin-top:-5px;"></img>
+                                <span style="font-size: smaller">{{itemsInCart}}({{1.1 * cartTotal | currency}})</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End of Navbar -->
+        <!-- Start of Shopping page -->
+        <div ng-show="shop">
+            <div class="product" ng-repeat="product in products | filter:theFilter" style="background-color:lightyellow">
+                <center>
+                    <div class="product-heading"><h3>{{ product.name }}</h3></div>
+                    <div class="product-image">
+                        <img ng-src="{{ product.url }}" alt="{{ product.name }}" />
+                    </div>
+                    <div class="product-desc"><p>{{ product.desc }}</p></div>
+                    <div class="product-price"><h4><b>{{ product.Price | currency}}</b></h4></div>
+                    <div class="product-cart">
+                        <form name="myform">
+                            <input type="number" step="1" min="1" max="10" ng-model="quantity" ng-hide="button_value[$index]" />
+                            <input type="submit" class="btn btn-primary btn-sm" value="Add to cart" ng-click="addFunction($index,product.name,product.Price,quantity)" ng-hide="button_value[$index]" ng-disabled="myform.$invalid" />
+                            <button type="button" class="btn btn-danger" ng-click="removeFunction($index,product.name,product.Price,quantity)" ng-show="button_value[$index]">Remove <span class="glyphicon glyphicon-remove"></span></button>
+                        </form>
+                    </div>
+                </center>
+            </div>
+        </div>
+        <!--End of Shopping page-->
+        <div class="ex" ng-hide="shop">
+            <!-- Empty Cart starts here -->
+            <center>
+                <div style="width:85%;" ng-show="cartTotal==0">
+                    <button type="button" class="btn btn-danger btn-block glyphicon glyphicon-alert" ng-click="shop=true"> Click here to Add items to your Cart</button>
+                    <div style="border: 2px solid #d9534f; border-radius: 1%">
+                        <img ng-src="/Images/shoppingcart_empty.jpg" class="img-responsive" alt="Shopping Cart is Empty" style="display:block; position:relative; width: 60%; padding: 15px" />
+                    </div>
+                </div>
+            </center>
+            <!-- Empty Cart ends here -->
+            <!-- Cart Page starts here -->
+            <center>
+                <div class="table-responsive" style="width: 85%;" ng-show="cartTotal!=0">
+                    <table class="table">
+                        <thead>
+                            <tr class="success">
+                                <th></th>
+                                <th>Quantity</th>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="eachitem in cartItems">
+                                <td><button class="btn btn-danger" ng-click="removeFromCart($index)">Remove <span class="glyphicon glyphicon-remove"></span></button></td>
+                                <td>{{ eachitem.quant }}</td>
+                                <td>{{ eachitem.nam }}</td>
+                                <td>{{ eachitem.pric | currency}}</td>
+                                <td>{{ eachitem.subtotal | currency}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Tax</td>
+                                <td>-</td>
+                                <td>10%</td>
+                                <td>{{ 0.1 * cartTotal | currency }}</td>
+                            </tr>
+                            <tr style="color:chocolate; font-weight: bold">
+                                <td></td>
+                                <td>Total</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>{{ 1.1 * cartTotal | currency }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </center>
+            <!-- Cart Page ends here -->
+        </div>
+    </div>
+</body>
+</html>

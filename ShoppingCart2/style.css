@@ -1,0 +1,55 @@
+.product{
+    display: inline-block;
+    width: 23.5%;
+    min-width: 200px;
+    height: 85%;
+    position: relative;
+    border:2px solid #a6a6a6;
+    border-radius: 3%;
+    padding: 2%;
+    margin: 0.5%;
+}
+
+.product .product-heading{
+    position: relative;
+    height: 15%;
+}
+
+.product .product-image{
+    position: relative;
+    height: 40%;
+}
+
+.product img{
+    position: relative;
+    height: 90%;  
+}
+
+.product img:hover{
+    position: relative;
+    height: 95%;
+}
+
+.product .product-desc{
+    position: relative;
+    height: 25%;
+}
+
+.product .product-price{
+    position:relative;
+    height: 8%;
+    color: darkcyan;
+}
+
+.product .product-cart{
+    position:relative;
+    height: 10%;
+}
+.btn.disabled{
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: .65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
